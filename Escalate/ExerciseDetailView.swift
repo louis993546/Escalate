@@ -11,10 +11,15 @@ struct ExerciseDetailView: View {
     let exercise: Exercise
     
     var body: some View {
-        Text("thing")
+        NavigationStack {
+            Text("thing")
+                .navigationTitle(exercise.startTime.formatted())
+        }
     }
 }
 
-//#Preview {
-//    ExerciseDetailView()
-//}
+#Preview {
+    ExerciseDetailView(
+        exercise: Exercise(sets: [], startTime: Date())
+    )
+}

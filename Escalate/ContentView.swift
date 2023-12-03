@@ -9,41 +9,30 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var exercises: [Exercise]
+    @Query(sort: \Exercise.startTime, order: .reverse) private var exercises: [Exercise]
     
     var body: some View {
         TabView {
-            NavigationSplitView {
-                HistoryListView(
-                    exercises: exercises,
-                    onAdd: addExercise,
-                    onDelete: removeExercise
-                )
-            } detail: {
-                Text("Select an entry")
-            }.tabItem {
+            HistoryListView(
+                exercises: exercises
+            ).tabItem {
                 Label("History", systemImage: "gym.bag.fill")
             }
             
-            Text("Coming soon")
-                .tabItem {
-                    Label("Settings", systemImage: "gear")
-                }
-        }
-    }
-    
-    private func addExercise() {
-        withAnimation {
-            let newExercise = Exercise(sets: [], startTime: Date())
-            modelContext.insert(newExercise)
-        }
-    }
-    
-    private func removeExercise(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(exercises[index])
+            NavigationStack {
+                Text("Coming soon")
+                    .navigationTitle("Statistics")
+            }
+            .tabItem {
+                Label("Statistics", systemImage: "chart.line.uptrend.xyaxis")
+            }
+            
+            NavigationStack {
+                Text("Coming soon")
+                    .navigationTitle("Settings")
+            }
+            .tabItem {
+                Label("Settings", systemImage: "gear")
             }
         }
     }

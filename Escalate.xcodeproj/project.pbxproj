@@ -68,6 +68,7 @@
 				BFACD7AE2B1BCB0E00EC0236 /* EscalateApp.swift */,
 				BFACD7B02B1BCB0E00EC0236 /* ContentView.swift */,
 				BFACD7C42B1BE9F400EC0236 /* HistoryListView.swift */,
+				BFACD7C62B1BEB0B00EC0236 /* ExerciseDetailView.swift */,
 				BFACD7B22B1BCB0F00EC0236 /* Exercise.swift */,
 				BFACD7C22B1BCF9000EC0236 /* Set.swift */,
 				BFACD7C02B1BCF7800EC0236 /* Rep.swift */,
@@ -75,7 +76,6 @@
 				BFACD7B92B1BCB0F00EC0236 /* Escalate.entitlements */,
 				BFACD7BA2B1BCB0F00EC0236 /* Info.plist */,
 				BFACD7B62B1BCB0F00EC0236 /* Preview Content */,
-				BFACD7C62B1BEB0B00EC0236 /* ExerciseDetailView.swift */,
 			);
 			path = Escalate;
 			sourceTree = "<group>";
