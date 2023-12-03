@@ -12,14 +12,40 @@ struct ExerciseDetailView: View {
     
     var body: some View {
         NavigationStack {
-            Text("thing")
-                .navigationTitle(exercise.startTime.formatted())
+            ScrollView {
+                LazyVGrid(
+                    columns: [
+                        GridItem(.flexible()),
+                        GridItem(.flexible()),
+                        GridItem(.flexible()),
+                        GridItem(.flexible())
+                    ]
+                ) {
+                    ForEach(exercise.sets, id: \.id) { set in
+                        Text(set.name)
+                        Text(String(set.reps.count))
+                        Text(String(set.getCommonWeight() ?? 0))
+                        Text(String(set.getCommonReps() ?? 0))
+                    }
+                }
+            }
+            .navigationTitle(exercise.startTime.formatted())
         }
     }
 }
 
 #Preview {
     ExerciseDetailView(
-        exercise: Exercise(sets: [], startTime: Date())
+        exercise: Exercise(
+            sets: [
+                Sets(
+                    name: "01",
+                    reps: [
+                        Reps(rep: 8, weightNumber: 40)
+                    ]
+                )
+            ],
+            startTime: Date()
+        )
     )
 }

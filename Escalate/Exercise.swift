@@ -12,10 +12,10 @@ import SwiftData
 // TODO: add location
 @Model
 final class Exercise {
-    var sets: [Set]
+    var sets: [Sets]
     var startTime: Date
     
-    init(sets: [Set], startTime: Date) {
+    init(sets: [Sets], startTime: Date) {
         self.sets = sets
         self.startTime = startTime
     }

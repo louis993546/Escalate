@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Rep {
+final class Reps {
     var rep: Int
     var weightNumber: Float
     

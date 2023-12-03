@@ -12,8 +12,8 @@
 		BFACD7B32B1BCB0F00EC0236 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFACD7B22B1BCB0F00EC0236 /* Exercise.swift */; };
 		BFACD7B52B1BCB0F00EC0236 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFACD7B42B1BCB0F00EC0236 /* Assets.xcassets */; };
 		BFACD7B82B1BCB0F00EC0236 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFACD7B72B1BCB0F00EC0236 /* Preview Assets.xcassets */; };
-		BFACD7C12B1BCF7800EC0236 /* Rep.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFACD7C02B1BCF7800EC0236 /* Rep.swift */; };
-		BFACD7C32B1BCF9000EC0236 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFACD7C22B1BCF9000EC0236 /* Set.swift */; };
+		BFACD7C12B1BCF7800EC0236 /* Reps.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFACD7C02B1BCF7800EC0236 /* Reps.swift */; };
+		BFACD7C32B1BCF9000EC0236 /* Sets.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFACD7C22B1BCF9000EC0236 /* Sets.swift */; };
 		BFACD7C52B1BE9F400EC0236 /* HistoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFACD7C42B1BE9F400EC0236 /* HistoryListView.swift */; };
 		BFACD7C72B1BEB0B00EC0236 /* ExerciseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFACD7C62B1BEB0B00EC0236 /* ExerciseDetailView.swift */; };
 		BFACD7CA2B1CCBD600EC0236 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFACD7C92B1CCBD600EC0236 /* SettingsView.swift */; };
@@ -28,8 +28,8 @@
 		BFACD7B72B1BCB0F00EC0236 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BFACD7B92B1BCB0F00EC0236 /* Escalate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Escalate.entitlements; sourceTree = "<group>"; };
 		BFACD7BA2B1BCB0F00EC0236 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BFACD7C02B1BCF7800EC0236 /* Rep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rep.swift; sourceTree = "<group>"; };
-		BFACD7C22B1BCF9000EC0236 /* Set.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
+		BFACD7C02B1BCF7800EC0236 /* Reps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reps.swift; sourceTree = "<group>"; };
+		BFACD7C22B1BCF9000EC0236 /* Sets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sets.swift; sourceTree = "<group>"; };
 		BFACD7C42B1BE9F400EC0236 /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
 		BFACD7C62B1BEB0B00EC0236 /* ExerciseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDetailView.swift; sourceTree = "<group>"; };
 		BFACD7C82B1C9E9900EC0236 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -73,8 +73,8 @@
 				BFACD7C62B1BEB0B00EC0236 /* ExerciseDetailView.swift */,
 				BFACD7C92B1CCBD600EC0236 /* SettingsView.swift */,
 				BFACD7B22B1BCB0F00EC0236 /* Exercise.swift */,
-				BFACD7C22B1BCF9000EC0236 /* Set.swift */,
-				BFACD7C02B1BCF7800EC0236 /* Rep.swift */,
+				BFACD7C22B1BCF9000EC0236 /* Sets.swift */,
+				BFACD7C02B1BCF7800EC0236 /* Reps.swift */,
 				BFACD7B42B1BCB0F00EC0236 /* Assets.xcassets */,
 				BFACD7B92B1BCB0F00EC0236 /* Escalate.entitlements */,
 				BFACD7BA2B1BCB0F00EC0236 /* Info.plist */,
@@ -163,12 +163,12 @@
 			files = (
 				BFACD7C72B1BEB0B00EC0236 /* ExerciseDetailView.swift in Sources */,
 				BFACD7CA2B1CCBD600EC0236 /* SettingsView.swift in Sources */,
-				BFACD7C32B1BCF9000EC0236 /* Set.swift in Sources */,
+				BFACD7C32B1BCF9000EC0236 /* Sets.swift in Sources */,
 				BFACD7C52B1BE9F400EC0236 /* HistoryListView.swift in Sources */,
 				BFACD7B12B1BCB0E00EC0236 /* ContentView.swift in Sources */,
 				BFACD7B32B1BCB0F00EC0236 /* Exercise.swift in Sources */,
 				BFACD7AF2B1BCB0E00EC0236 /* EscalateApp.swift in Sources */,
-				BFACD7C12B1BCF7800EC0236 /* Rep.swift in Sources */,
+				BFACD7C12B1BCF7800EC0236 /* Reps.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,8 +13,8 @@ struct EscalateApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Exercise.self,
-            Set.self,
-            Rep.self,
+            Sets.self,
+            Reps.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
