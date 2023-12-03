@@ -10,46 +10,40 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
+    @Query private var exercises: [Exercise]
+    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
+        TabView {
+            NavigationSplitView {
+                HistoryListView(
+                    exercises: exercises,
+                    onAdd: addExercise,
+                    onDelete: removeExercise
+                )
+            } detail: {
+                Text("Select an entry")
+            }.tabItem {
+                Label("History", systemImage: "gym.bag.fill")
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+            
+            Text("Coming soon")
+                .tabItem {
+                    Label("Settings", systemImage: "gear")
                 }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
         }
     }
-
-    private func addItem() {
+    
+    private func addExercise() {
         withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
+            let newExercise = Exercise(sets: [], startTime: Date())
+            modelContext.insert(newExercise)
         }
     }
-
-    private func deleteItems(offsets: IndexSet) {
+    
+    private func removeExercise(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
-                modelContext.delete(items[index])
+                modelContext.delete(exercises[index])
             }
         }
     }
@@ -57,5 +51,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .modelContainer(for: Exercise.self, inMemory: true)
 }
