@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct HistoryListView: View {
-    let exercises: [Exercise]
-    
     @Environment(\.modelContext) private var modelContext
     @State private var selectedExercise: Exercise?
+    
+    let exercises: [Exercise]
     
     var body: some View {
         NavigationSplitView {
@@ -46,10 +46,13 @@ struct HistoryListView: View {
                             Label("Add from scratch", systemImage: "plus.square")
                         }
                         
-                        Button {
-                            addExercise()
-                        } label: {
-                            Label("Clone from history", systemImage: "doc.on.doc")
+                        // TODO: not just hide it, if there is no history, just skip the menu
+                        if !exercises.isEmpty {
+                            Button {
+                                addExercise()
+                            } label: {
+                                Label("Clone from history", systemImage: "doc.on.doc")
+                            }
                         }
                     } label: {
                         Label("Add From Scratch", systemImage: "plus")

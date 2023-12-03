@@ -27,13 +27,10 @@ struct ContentView: View {
                 Label("Statistics", systemImage: "chart.line.uptrend.xyaxis")
             }
             
-            NavigationStack {
-                Text("Coming soon")
-                    .navigationTitle("Settings")
-            }
-            .tabItem {
-                Label("Settings", systemImage: "gear")
-            }
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gear")
+                }
         }
     }
 }

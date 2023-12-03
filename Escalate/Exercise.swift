@@ -8,6 +8,8 @@
 import Foundation
 import SwiftData
 
+// TODO: add title/comment/something like that
+// TODO: add location
 @Model
 final class Exercise {
     var sets: [Set]
