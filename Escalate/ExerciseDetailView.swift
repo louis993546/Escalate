@@ -43,11 +43,12 @@ struct ExerciseDetailView: View {
                 .padding()
             }
             .navigationTitle(exercise.startTime.formatted())
+            .toolbar(.hidden, for: .tabBar)
             .toolbar {
                 ToolbarItem() {
                     ShareLink(
-                        item: Shareable(codable: exercise),
-                        preview: .init(exercise.startTime.formatted())
+                        item: exercise,
+                        preview: .init(exercise.startTime.formatted() + ".json")
                     )
                 }
             }
@@ -55,17 +56,23 @@ struct ExerciseDetailView: View {
     }
 }
 
-private struct Shareable: Transferable {
-    var codable: Codable
-    
-    func generateContent() async -> String {
-        let jsonData = try! JSONEncoder().encode(codable)
-        return String(decoding: jsonData, as: UTF8.self)
+extension Exercise: Transferable {
+    static func jsonEncoder() -> JSONEncoder {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        encoder.outputFormatting = .prettyPrinted
+        
+        return encoder
     }
     
     static var transferRepresentation: some TransferRepresentation {
-        ProxyRepresentation { report in
-            await report.generateContent()
+        CodableRepresentation(
+            contentType: .json,
+            encoder: jsonEncoder(),
+            decoder: JSONDecoder()
+        )
+        .suggestedFileName {
+            $0.startTime.formatted() + ".json"
         }
     }
 }

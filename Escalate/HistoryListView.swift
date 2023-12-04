@@ -69,7 +69,7 @@ struct HistoryListView: View {
     
     private func addExercise() {
         withAnimation {
-            let newExercise = Exercise(startTime: Date(), comment: "Elit est amet ipsum voluptate ut exercitation adipiscing tempor duis culpa incididunt. Sed sunt cillum sed ut excepteur duis eu qui duis do adipiscing do consequat quis elit magna dolor consequat. Ipsum officia sint et incididunt sint nostrud eiusmod sed esse consequat.")
+            let newExercise = Exercise(startTime: Date(), comment: "Elit est amet ipsum voluptate ut exercitation adipiscing tempor duis culpa incididunt.")
             modelContext.insert(newExercise)
             
             newExercise.sets.append(Sets(name: "01", order: 1, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
