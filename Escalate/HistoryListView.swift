@@ -22,15 +22,20 @@ struct HistoryListView: View {
                         Text(exercise.startTime.formatted())
                             .contextMenu {
                                 Button {
-                                    deleteExercise(exercise: exercise)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                                
-                                Button {
                                     addExercise()
                                 } label: {
                                     Label("Again", systemImage: "doc.on.doc")
+                                }
+                                
+                                ShareLink(
+                                    item: exercise,
+                                    preview: .init(exercise.startTime.formatted() + ".json")
+                                )
+                                
+                                Button(role: .destructive) {
+                                    deleteExercise(exercise: exercise)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
                                 }
                             }
                     }

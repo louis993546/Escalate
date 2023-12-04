@@ -12,12 +12,24 @@ struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Exercise.startTime, order: .reverse) private var exercises: [Exercise]
     
+    @AppStorage("dragSensitivity") private var dragSensitivity = 24
+    
     @State private var showingDeleteAlert = false
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     
     var body: some View {
         NavigationStack {
             Form {
+                Section {
+                    LabeledContent {
+                        Stepper(value: $dragSensitivity, in: 10...100) {
+                            Text(dragSensitivity.formatted(.number))
+                        }
+                    } label: {
+                        Text("Drag Sensitivity: ")
+                    }
+                }
+                
                 Section {
                     ShareLink(
                         item: ExerciseWrapper(exercies: exercises),
