@@ -11,17 +11,21 @@ import SwiftData
 @Model
 final class Sets: Codable {
     enum CodingKeys: CodingKey {
-        case name, order, reps
+        case name, order, reps, skipped, remark
     }
     
     var name: String
     var order: Int
     @Relationship(deleteRule: .cascade) var reps: [Reps]
+    var skipped: Bool
+    var remark: String?
     
-    init(name: String, order: Int, reps: [Reps] = []) {
+    init(name: String, order: Int, reps: [Reps] = [], skipped: Bool = false, remark: String? = nil) {
         self.name = name
         self.order = order
         self.reps = reps
+        self.skipped = skipped
+        self.remark = remark
     }
     
     func getCommonReps() -> Int? {
@@ -41,6 +45,8 @@ final class Sets: Codable {
         self.name = try container.decode(String.self, forKey: .name)
         self.order = try container.decode(Int.self, forKey: .order)
         self.reps = try container.decode([Reps].self, forKey: .reps)
+        self.skipped = try container.decode(Bool.self, forKey: .skipped)
+        self.remark = try container.decode(String.self, forKey: .remark)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -48,5 +54,7 @@ final class Sets: Codable {
         try container.encode(name, forKey: .name)
         try container.encode(order, forKey: .order)
         try container.encode(reps, forKey: .reps)
+        try container.encode(skipped, forKey: .skipped)
+        try container.encode(remark, forKey: .remark)
     }
 }

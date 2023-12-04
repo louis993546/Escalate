@@ -74,22 +74,33 @@ struct HistoryListView: View {
     
     private func addExercise() {
         withAnimation {
-            let newExercise = Exercise(startTime: Date(), comment: "Elit est amet ipsum voluptate ut exercitation adipiscing tempor duis culpa incididunt.")
+            let newExercise = Exercise(startTime: Date(), comment: "")
             modelContext.insert(newExercise)
             
-            newExercise.sets.append(Sets(name: "01", order: 1, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
-            newExercise.sets.append(Sets(name: "02", order: 2, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
-            newExercise.sets.append(Sets(name: "03", order: 3, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
-            newExercise.sets.append(Sets(name: "04", order: 4, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
-            newExercise.sets.append(Sets(name: "05", order: 5, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
-            newExercise.sets.append(Sets(name: "06", order: 6, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
-            newExercise.sets.append(Sets(name: "07", order: 7, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
-            newExercise.sets.append(Sets(name: "08", order: 8, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
-            newExercise.sets.append(Sets(name: "09", order: 9, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
-            newExercise.sets.append(Sets(name: "10", order: 10, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
-            newExercise.sets.append(Sets(name: "11", order: 11, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
-            newExercise.sets.append(Sets(name: "12", order: 12, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
-            newExercise.sets.append(Sets(name: "13", order: 13, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
+            newExercise.sets.append(Sets(name: "01", order: 1, reps: [Reps(rep: 12, weightNumber: 40),Reps(rep: 12, weightNumber: 40),Reps(rep: 12, weightNumber: 40)]))
+            newExercise.sets.append(Sets(name: "02", order: 2, reps: [Reps(rep: 8, weightNumber: 35),Reps(rep: 8, weightNumber: 35),Reps(rep: 8, weightNumber: 35)]))
+            newExercise.sets.append(Sets(name: "03", order: 3, reps: [Reps(rep: 10, weightNumber: 50),Reps(rep: 10, weightNumber: 50),Reps(rep: 10, weightNumber: 50)]))
+            newExercise.sets.append(Sets(name: "04(A)", order: 4, reps: [Reps(rep: 14, weightNumber: 15),Reps(rep: 14, weightNumber: 15),Reps(rep: 14, weightNumber: 15)], remark: "😕"))
+            newExercise.sets.append(Sets(name: "05(A)", order: 5, reps: [Reps(rep: 8, weightNumber: 57.5),Reps(rep: 8, weightNumber: 57.5),Reps(rep: 8, weightNumber: 57.5)]))
+            newExercise.sets.append(Sets(name: "06", order: 6, reps: [Reps(rep: 8, weightNumber: 20),Reps(rep: 8, weightNumber: 20),Reps(rep: 8, weightNumber: 20)]))
+            newExercise.sets.append(Sets(name: "07", order: 7, reps: [Reps(rep: 10, weightNumber: 100),Reps(rep: 10, weightNumber: 100),Reps(rep: 10, weightNumber: 100)]))
+            newExercise.sets.append(Sets(name: "07(L)", order: 8, reps: [Reps(rep: 8, weightNumber: 20),Reps(rep: 8, weightNumber: 20),Reps(rep: 8, weightNumber: 20)], remark: "+"))
+            newExercise.sets.append(Sets(name: "08", order: 9, reps: [Reps(rep: 8, weightNumber: 55),Reps(rep: 8, weightNumber: 55),Reps(rep: 8, weightNumber: 55)], remark: "+"))
+            newExercise.sets.append(Sets(name: "09", order: 10, reps: [Reps(rep: 8, weightNumber: 55),Reps(rep: 8, weightNumber: 55),Reps(rep: 8, weightNumber: 55)]))
+            newExercise.sets.append(Sets(name: "13 👍", order: 11, reps: [Reps(rep: 12, weightNumber: 22.5),Reps(rep: 12, weightNumber: 22.5),Reps(rep: 12, weightNumber: 22.5)]))
+            newExercise.sets.append(Sets(name: "14", order: 12, reps: [Reps(rep: 10, weightNumber: 30),Reps(rep: 10, weightNumber: 30),Reps(rep: 10, weightNumber: 30)]))
+            newExercise.sets.append(Sets(name: "17", order: 13, reps: [Reps(rep: 15, weightNumber: 30),Reps(rep: 15, weightNumber: 30),Reps(rep: 15, weightNumber: 30)]))
+            newExercise.sets.append(Sets(name: "21", order: 14, reps: [Reps(rep: 10, weightNumber: 20),Reps(rep: 10, weightNumber: 20),Reps(rep: 10, weightNumber: 20)], remark: "+"))
+            newExercise.sets.append(Sets(name: "22 👍", order: 15, reps: [Reps(rep: 9, weightNumber: 12.5),Reps(rep: 9, weightNumber: 12.5),Reps(rep: 9, weightNumber: 12.5)]))
+            newExercise.sets.append(Sets(name: "23 single", order: 16, reps: [Reps(rep: 8, weightNumber: 15),Reps(rep: 8, weightNumber: 15),Reps(rep: 8, weightNumber: 15)]))
+            
+            newExercise.sets.append(Sets(name: "24", order: 17, reps: [Reps(rep: 12, weightNumber: 22.5),Reps(rep: 12, weightNumber: 22.5),Reps(rep: 12, weightNumber: 22.5)]))
+            newExercise.sets.append(Sets(name: "120 L", order: 18, reps: [Reps(rep: 8, weightNumber: 17.5),Reps(rep: 8, weightNumber: 17.5),Reps(rep: 8, weightNumber: 17.5)]))
+            newExercise.sets.append(Sets(name: "120 R", order: 19, reps: [Reps(rep: 8, weightNumber: 17.5),Reps(rep: 8, weightNumber: 17.5),Reps(rep: 8, weightNumber: 17.5)]))
+            newExercise.sets.append(Sets(name: "Pectoral", order: 20, reps: [Reps(rep: 12, weightNumber: 15),Reps(rep: 12, weightNumber: 15),Reps(rep: 12, weightNumber: 15)], remark: "😕"))
+            
+            // Dummy
+            newExercise.sets.append(Sets(name: "test", order: 21, reps: [Reps(rep: 12, weightNumber: 22.5),Reps(rep: 12, weightNumber: 22.5),Reps(rep: 12, weightNumber: 22.5)], skipped: true))
         }
     }
     

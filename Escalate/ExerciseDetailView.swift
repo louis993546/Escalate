@@ -10,7 +10,7 @@ import SwiftData
 
 struct ExerciseDetailView: View {
     @Environment(\.modelContext) private var modelContext
-//    @Environment(\.presentationMode) var presentationMode
+    //    @Environment(\.presentationMode) var presentationMode
     
     let exercise: Exercise
     
@@ -29,37 +29,7 @@ struct ExerciseDetailView: View {
                     ForEach(exercise.sets.sorted(by: { $0.order < $1.order }), id: \.id) { set in
                         SetsRowView(
                             set: set,
-                            onSetChange: { diff in
-                                print("diff = \(diff)")
-                                
-                                exercise.sets = exercise.sets.map { (s) -> Sets in
-                                    if set == s {
-                                        var newReps = s.reps.map {
-                                            return Reps(rep: $0.rep, weightNumber: $0.weightNumber)
-                                        }
-                                        guard let lastRep = newReps.last else { return s }
-                                        if (diff < 0) {
-                                            let count = abs(diff)
-                                            count.times {
-                                                newReps.removeLast()
-                                            }
-                                        } else {
-                                            diff.times {
-                                                newReps.append(
-                                                    Reps(rep: lastRep.rep, weightNumber: lastRep.weightNumber)
-                                                )
-                                            }
-                                        }
-                                        return Sets(
-                                            name: s.name,
-                                            order: s.order,
-                                            reps: newReps
-                                        )
-                                    } else {
-                                        return s
-                                    }
-                                }
-                            }
+                            onSetChange: { diff in updateSet(diff: diff, oldSet: set) }
                         )
                         Separator()
                     }
@@ -79,8 +49,8 @@ struct ExerciseDetailView: View {
                     Menu {
                         Button(role: .destructive) {
                             withAnimation {
-//                                modelContext.delete(exercise)
-//                                self.commitDataEntry()
+                                //                                modelContext.delete(exercise)
+                                //                                self.commitDataEntry()
                             }
                         } label: {
                             Label("Delete", systemImage: "trash")
@@ -97,7 +67,37 @@ struct ExerciseDetailView: View {
         .onDisappear {
             UIApplication.shared.isIdleTimerDisabled = false
         }
-//        .onAppear(perform: loadStateVariables)
+        //        .onAppear(perform: loadStateVariables)
+    }
+    
+    private func updateSet(diff: Int, oldSet set: Sets) {
+        exercise.sets = exercise.sets.map { (s) -> Sets in
+            if set == s {
+                var newReps = s.reps.map {
+                    return Reps(rep: $0.rep, weightNumber: $0.weightNumber)
+                }
+                guard let lastRep = newReps.last else { return s }
+                if (diff < 0) {
+                    let count = abs(diff)
+                    count.times {
+                        newReps.removeLast()
+                    }
+                } else {
+                    diff.times {
+                        newReps.append(
+                            Reps(rep: lastRep.rep, weightNumber: lastRep.weightNumber)
+                        )
+                    }
+                }
+                return Sets(
+                    name: s.name,
+                    order: s.order,
+                    reps: newReps
+                )
+            } else {
+                return s
+            }
+        }
     }
 }
 
@@ -135,6 +135,7 @@ struct SetsRowView: View {
             .onEnded { value in
                 withAnimation {
                     isDragging = true
+                    UINotificationFeedbackGenerator().notificationOccurred(.success)
                 }
             }
         let dragGesture = DragGesture()
@@ -150,11 +151,46 @@ struct SetsRowView: View {
         
         GridRow {
             Text(set.name)
-            Text(String(format: "%.0f", max(Float(set.reps.count) + repsDiff, 0)))
+                .frame(minWidth: 64, minHeight: 22, alignment: .leading)
+                .contentShape(Rectangle())
+                .contextMenu {
+                    Button(role: .destructive) {
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                }
+            Text(String(set.reps.count))
                 .gesture(combinedGesture)
-            Text(String(set.getCommonWeight() ?? 0))
-            Text(String(set.getCommonReps() ?? 0))
+                .popover(isPresented: $isDragging) {
+                    Text(String(format: "%.0f", max(Float(set.reps.count) + repsDiff, 0)))
+                        .presentationCompactAdaptation((.popover))
+                }
+            Text(String(set.getCommonWeight()?.clean ?? "WTF"))
+            Text(String(set.getCommonReps() ?? 0)) + Text(" \(set.remark ?? "")").font(.footnote)
+        }.if({return set.skipped}()) { view in
+            view.foregroundStyle(.gray)
         }
+    }
+}
+
+extension View {
+    /// Applies the given transform if the given condition evaluates to `true`.
+    /// - Parameters:
+    ///   - condition: The condition to evaluate.
+    ///   - transform: The transform to apply to the source `View`.
+    /// - Returns: Either the original `View` or the modified `View` if the condition is `true`.
+    @ViewBuilder func `if`<Content: View>(_ condition: @autoclosure () -> Bool, transform: (Self) -> Content) -> some View {
+        if condition() {
+            transform(self)
+        } else {
+            self
+        }
+    }
+}
+
+extension Float {
+    var clean: String {
+        return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
     }
 }
 
