@@ -6,20 +6,17 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
-    @Query(sort: \Exercise.startTime, order: .reverse) private var exercises: [Exercise]
-    
     var body: some View {
         TabView {
-            HistoryListView(
-                exercises: exercises
-            ).tabItem {
+            HistoryListView()
+                .tabItem {
                 Label("History", systemImage: "gym.bag.fill")
             }
             
             NavigationStack {
+                // TODO: https://www.appcoda.com/swiftui-line-charts/
                 Text("Coming soon")
                     .navigationTitle("Statistics")
             }

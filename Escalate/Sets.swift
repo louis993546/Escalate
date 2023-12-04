@@ -9,12 +9,18 @@ import Foundation
 import SwiftData
 
 @Model
-final class Sets {
-    var name: String
-    var reps: [Reps]
+final class Sets: Codable {
+    enum CodingKeys: CodingKey {
+        case name, order, reps
+    }
     
-    init(name: String, reps: [Reps]) {
+    var name: String
+    var order: Int
+    @Relationship(deleteRule: .cascade) var reps: [Reps]
+    
+    init(name: String, order: Int, reps: [Reps] = []) {
         self.name = name
+        self.order = order
         self.reps = reps
     }
     
@@ -28,5 +34,19 @@ final class Sets {
         return reps.allSatisfy { rep in
             rep.weightNumber == reps.first?.weightNumber
         } ? reps.first?.weightNumber : nil
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.order = try container.decode(Int.self, forKey: .order)
+        self.reps = try container.decode([Reps].self, forKey: .reps)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(order, forKey: .order)
+        try container.encode(reps, forKey: .reps)
     }
 }

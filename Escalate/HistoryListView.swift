@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HistoryListView: View {
     @Environment(\.modelContext) private var modelContext
-    @State private var selectedExercise: Exercise?
+    @Query(sort: \Exercise.startTime, order: .reverse) private var exercises: [Exercise]
     
-    let exercises: [Exercise]
+    @State private var selectedExercise: Exercise?
     
     var body: some View {
         NavigationSplitView {
@@ -68,18 +69,22 @@ struct HistoryListView: View {
     
     private func addExercise() {
         withAnimation {
-            let newExercise = Exercise(
-                sets: [
-                    Sets(
-                        name: "01",
-                        reps: [
-                            Reps(rep: 8, weightNumber: 40)
-                        ]
-                    )
-                ],
-                startTime: Date()
-            )
+            let newExercise = Exercise(startTime: Date(), comment: "Elit est amet ipsum voluptate ut exercitation adipiscing tempor duis culpa incididunt. Sed sunt cillum sed ut excepteur duis eu qui duis do adipiscing do consequat quis elit magna dolor consequat. Ipsum officia sint et incididunt sint nostrud eiusmod sed esse consequat.")
             modelContext.insert(newExercise)
+            
+            newExercise.sets.append(Sets(name: "01", order: 1, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
+            newExercise.sets.append(Sets(name: "02", order: 2, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
+            newExercise.sets.append(Sets(name: "03", order: 3, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
+            newExercise.sets.append(Sets(name: "04", order: 4, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
+            newExercise.sets.append(Sets(name: "05", order: 5, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
+            newExercise.sets.append(Sets(name: "06", order: 6, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
+            newExercise.sets.append(Sets(name: "07", order: 7, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
+            newExercise.sets.append(Sets(name: "08", order: 8, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
+            newExercise.sets.append(Sets(name: "09", order: 9, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
+            newExercise.sets.append(Sets(name: "10", order: 10, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
+            newExercise.sets.append(Sets(name: "11", order: 11, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
+            newExercise.sets.append(Sets(name: "12", order: 12, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
+            newExercise.sets.append(Sets(name: "13", order: 13, reps: [Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40),Reps(rep: 8, weightNumber: 40)]))
         }
     }
     
@@ -97,11 +102,5 @@ struct HistoryListView: View {
 }
 
 #Preview {
-    HistoryListView(
-        exercises: [
-            Exercise(sets: [], startTime: Date()),
-            Exercise(sets: [], startTime: Date()),
-            Exercise(sets: [], startTime: Date())
-        ]
-    )
+    HistoryListView()
 }
