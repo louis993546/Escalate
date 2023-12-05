@@ -15,11 +15,12 @@ struct HistoryListView: View {
     @State private var selectedExercise: Exercise?
 
     var body: some View {
+        
         NavigationSplitView {
             List(selection: $selectedExercise) {
                 ForEach(exercises, id: \.id) { exercise in
                     NavigationLink(value: exercise) {
-                        Text(exercise.startTime.formatted())
+                        Text(exercise.startTime.prettyPrint())
                                 .contextMenu {
                                     Button {
                                         selectedExercise = addExercise()
@@ -75,7 +76,7 @@ struct HistoryListView: View {
 
     private func addExercise() -> Exercise {
         return withAnimation {
-            let newExercise = Exercise(startTime: Date(), comment: "")
+            let newExercise = Exercise(startTime: Date(), comment: "testing")
             modelContext.insert(newExercise)
 
             newExercise.sets.append(Sets(name: "01", order: 1, reps: [Reps(rep: 12, weightNumber: 40), Reps(rep: 12, weightNumber: 40), Reps(rep: 12, weightNumber: 40)]))
@@ -117,6 +118,15 @@ struct HistoryListView: View {
         withAnimation {
             modelContext.delete(exercise)
         }
+    }
+}
+
+extension Date {
+    func prettyPrint() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY.MM.dd"
+        
+        return dateFormatter.string(from: self)
     }
 }
 
