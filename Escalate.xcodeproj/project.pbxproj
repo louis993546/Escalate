@@ -63,6 +63,45 @@
 			path = Escalate.xcodeproj/project.xcworkspace/xcuserdata/louis.xcuserdatad/xcschemes;
 			sourceTree = "<group>";
 		};
+		BF73BB532B1FCD3D00D01939 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				BFACD7B22B1BCB0F00EC0236 /* Exercise.swift */,
+				BFACD7C22B1BCF9000EC0236 /* Sets.swift */,
+				BFACD7C02B1BCF7800EC0236 /* Reps.swift */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		BF73BB542B1FCD5A00D01939 /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				BFACD7C62B1BEB0B00EC0236 /* ExerciseDetailView.swift */,
+				BF73BB4B2B1FB6F200D01939 /* AttributesView.swift */,
+				BF73BB4D2B1FCB8100D01939 /* SetsRowView.swift */,
+				BF73BB4F2B1FCBFF00D01939 /* ExerciseHeaderRowView.swift */,
+				BF73BB512B1FCC3400D01939 /* Separator.swift */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
+		BF73BB552B1FCD6400D01939 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				BFACD7C42B1BE9F400EC0236 /* HistoryListView.swift */,
+				BF73BB542B1FCD5A00D01939 /* Details */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		BF73BB562B1FCD6A00D01939 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				BFACD7C92B1CCBD600EC0236 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		BFACD7A22B1BCB0E00EC0236 = {
 			isa = PBXGroup;
 			children = (
@@ -86,20 +125,13 @@
 			children = (
 				BFACD7AE2B1BCB0E00EC0236 /* EscalateApp.swift */,
 				BFACD7B02B1BCB0E00EC0236 /* ContentView.swift */,
-				BFACD7C42B1BE9F400EC0236 /* HistoryListView.swift */,
-				BFACD7C62B1BEB0B00EC0236 /* ExerciseDetailView.swift */,
-				BF73BB4B2B1FB6F200D01939 /* AttributesView.swift */,
-				BF73BB4D2B1FCB8100D01939 /* SetsRowView.swift */,
-				BFACD7C92B1CCBD600EC0236 /* SettingsView.swift */,
-				BFACD7B22B1BCB0F00EC0236 /* Exercise.swift */,
-				BFACD7C22B1BCF9000EC0236 /* Sets.swift */,
-				BFACD7C02B1BCF7800EC0236 /* Reps.swift */,
+				BF73BB552B1FCD6400D01939 /* History */,
+				BF73BB562B1FCD6A00D01939 /* Settings */,
+				BF73BB532B1FCD3D00D01939 /* Packages */,
 				BFACD7B42B1BCB0F00EC0236 /* Assets.xcassets */,
 				BFACD7B92B1BCB0F00EC0236 /* Escalate.entitlements */,
 				BFACD7BA2B1BCB0F00EC0236 /* Info.plist */,
 				BFACD7B62B1BCB0F00EC0236 /* Preview Content */,
-				BF73BB4F2B1FCBFF00D01939 /* ExerciseHeaderRowView.swift */,
-				BF73BB512B1FCC3400D01939 /* Separator.swift */,
 			);
 			path = Escalate;
 			sourceTree = "<group>";

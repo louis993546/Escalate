@@ -38,12 +38,22 @@ struct SetsRowView: View {
         
         GridRow {
             Text(set.name)
-                .frame(minWidth: 64, minHeight: 22, alignment: .leading)
+                .frame(minWidth: 40, minHeight: 22, alignment: .leading)
                 .contentShape(Rectangle())
                 .contextMenu {
                     Button(role: .destructive) {
+                        // TODO
                     } label: {
-                        Label("Delete", systemImage: "trash")
+                        Label("Delete (coming soon)", systemImage: "trash")
+                    }
+                    
+                    Button {
+                        set.skipped = !set.skipped
+                    } label: {
+                        Label(
+                            set.skipped ? "Resume" : "Mark as skipped",
+                            systemImage: set.skipped ? "play" : "pause"
+                        )
                     }
                 }
             Text(String(set.reps.count))

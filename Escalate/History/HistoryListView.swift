@@ -11,9 +11,9 @@ import SwiftData
 struct HistoryListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Exercise.startTime, order: .reverse) private var exercises: [Exercise]
-
+    
     @State private var selectedExercise: Exercise?
-
+    
     var body: some View {
         
         NavigationSplitView {
@@ -21,64 +21,65 @@ struct HistoryListView: View {
                 ForEach(exercises, id: \.id) { exercise in
                     NavigationLink(value: exercise) {
                         Text(exercise.startTime.prettyPrint())
-                                .contextMenu {
-                                    Button {
-                                        selectedExercise = addExercise()
-                                        
-                                    } label: {
-                                        Label("Again", systemImage: "doc.on.doc")
-                                    }
-
-                                    ShareLink(
-                                        item: exercise,
-                                        preview: .init(exercise.startTime.formatted() + ".json")
-                                    )
-
-                                    Button(role: .destructive) {
-                                        removeExercise(exercise: exercise)
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                }
-                    }
-                }
-                        .onDelete(perform: removeExercise)
-            }
-                    .navigationTitle("History")
-                    .toolbar {
-                        ToolbarItem {
-                            Menu {
+                            .contextMenu {
                                 Button {
                                     selectedExercise = addExercise()
                                 } label: {
-                                    Label("Add from scratch", systemImage: "plus.square")
+                                    Label("Again", systemImage: "doc.on.doc")
                                 }
-
-                                // TODO: not just hide it, if there is no history, just skip the menu
-                                if !exercises.isEmpty {
-                                    Button {
-                                       selectedExercise = addExercise()
-                                    } label: {
-                                        Label("Clone from history", systemImage: "doc.on.doc")
-                                    }
+                                
+                                ShareLink(
+                                    item: exercise,
+                                    preview: .init(exercise.startTime.formatted() + ".json")
+                                )
+                                
+                                Button(role: .destructive) {
+                                    removeExercise(exercise: exercise)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
                                 }
+                            }
+                    }
+                }
+                .onDelete(perform: removeExercise)
+            }
+            .navigationTitle("History")
+            .toolbar {
+                ToolbarItem {
+                    Menu {
+                        Button {
+                            selectedExercise = addExercise()
+                        } label: {
+                            Label("Add from scratch", systemImage: "plus.square")
+                        }
+                        
+                        // TODO: not just hide it, if there is no history, just skip the menu
+                        if !exercises.isEmpty {
+                            Button {
+                                selectedExercise = addExercise()
                             } label: {
-                                Label("Add From Scratch", systemImage: "plus")
+                                Label("Clone from history", systemImage: "doc.on.doc")
                             }
                         }
+                    } label: {
+                        Label("Add From Scratch", systemImage: "plus")
                     }
+                }
+            }
         } detail: {
             if selectedExercise != nil {
                 ExerciseDetailView(exercise: selectedExercise!)
+            } else {
+                Text("Select an exercise")
             }
         }
     }
-
+    
     private func addExercise() -> Exercise {
         return withAnimation {
             let newExercise = Exercise(startTime: Date(), comment: "testing")
             modelContext.insert(newExercise)
-
+            
             newExercise.sets.append(Sets(name: "01", order: 1, reps: [Reps(rep: 12, weightNumber: 40), Reps(rep: 12, weightNumber: 40), Reps(rep: 12, weightNumber: 40)]))
             newExercise.sets.append(Sets(name: "02", order: 2, reps: [Reps(rep: 8, weightNumber: 35), Reps(rep: 8, weightNumber: 35), Reps(rep: 8, weightNumber: 35)]))
             newExercise.sets.append(Sets(name: "03", order: 3, reps: [Reps(rep: 10, weightNumber: 50), Reps(rep: 10, weightNumber: 50), Reps(rep: 10, weightNumber: 50)]))
@@ -95,25 +96,25 @@ struct HistoryListView: View {
             newExercise.sets.append(Sets(name: "21", order: 14, reps: [Reps(rep: 10, weightNumber: 20), Reps(rep: 10, weightNumber: 20), Reps(rep: 10, weightNumber: 20)], remark: "+"))
             newExercise.sets.append(Sets(name: "22 👍", order: 15, reps: [Reps(rep: 9, weightNumber: 12.5), Reps(rep: 9, weightNumber: 12.5), Reps(rep: 9, weightNumber: 12.5)]))
             newExercise.sets.append(Sets(name: "23 single", order: 16, reps: [Reps(rep: 8, weightNumber: 15), Reps(rep: 8, weightNumber: 15), Reps(rep: 8, weightNumber: 15)]))
-
+            
             newExercise.sets.append(Sets(name: "24", order: 17, reps: [Reps(rep: 12, weightNumber: 22.5), Reps(rep: 12, weightNumber: 22.5), Reps(rep: 12, weightNumber: 22.5)]))
             newExercise.sets.append(Sets(name: "120 L", order: 18, reps: [Reps(rep: 8, weightNumber: 17.5), Reps(rep: 8, weightNumber: 17.5), Reps(rep: 8, weightNumber: 17.5)]))
             newExercise.sets.append(Sets(name: "120 R", order: 19, reps: [Reps(rep: 8, weightNumber: 17.5), Reps(rep: 8, weightNumber: 17.5), Reps(rep: 8, weightNumber: 17.5)]))
             newExercise.sets.append(Sets(name: "Pectoral", order: 20, reps: [Reps(rep: 12, weightNumber: 15), Reps(rep: 12, weightNumber: 15), Reps(rep: 12, weightNumber: 15)], remark: "😕"))
-
+            
             // Dummy
             newExercise.sets.append(Sets(name: "test", order: 21, reps: [Reps(rep: 12, weightNumber: 22.5), Reps(rep: 12, weightNumber: 22.5), Reps(rep: 12, weightNumber: 22.5)], skipped: true))
             
             return newExercise
         }
     }
-
+    
     private func removeExercise(offsets: IndexSet) {
         for index in offsets {
             removeExercise(exercise: exercises[index])
         }
     }
-
+    
     private func removeExercise(exercise: Exercise) {
         withAnimation {
             modelContext.delete(exercise)
@@ -131,5 +132,7 @@ extension Date {
 }
 
 #Preview {
+    // TODO: insert some fake data here https://www.hackingwithswift.com/quick-start/swiftdata/how-to-use-swiftdata-in-swiftui-previews
     HistoryListView()
+        .modelContainer(for: Exercise.self, inMemory: true)
 }
