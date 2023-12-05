@@ -47,12 +47,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		626239076394F24E5E428F80 /* xcschemes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = xcschemes;
+			path = Escalate.xcodeproj/project.xcworkspace/xcuserdata/louis.xcuserdatad/xcschemes;
+			sourceTree = "<group>";
+		};
 		BFACD7A22B1BCB0E00EC0236 = {
 			isa = PBXGroup;
 			children = (
 				BFACD7C82B1C9E9900EC0236 /* README.md */,
 				BFACD7AD2B1BCB0E00EC0236 /* Escalate */,
 				BFACD7AC2B1BCB0E00EC0236 /* Products */,
+				626239076394F24E5E428F80 /* xcschemes */,
 			);
 			sourceTree = "<group>";
 		};
