@@ -37,25 +37,13 @@ struct SetsRowView: View {
         let combinedGesture = longPressGesture.sequenced(before: dragGesture)
         
         GridRow {
-            Text(set.name)
-                .frame(minWidth: 40, minHeight: 22, alignment: .leading)
-                .contentShape(Rectangle())
-                .contextMenu {
-                    Button(role: .destructive) {
-                        // TODO
-                    } label: {
-                        Label("Delete (coming soon)", systemImage: "trash")
-                    }
-                    
-                    Button {
-                        set.skipped = !set.skipped
-                    } label: {
-                        Label(
-                            set.skipped ? "Resume" : "Mark as skipped",
-                            systemImage: set.skipped ? "play" : "pause"
-                        )
-                    }
+            SetNameView(
+                name: set.name, 
+                skipped: set.skipped,
+                onSkipPressed: { newValue in
+                    set.skipped = newValue
                 }
+            )
             Text(String(set.reps.count))
                 .gesture(combinedGesture)
                 .popover(isPresented: $isDragging) {

@@ -178,5 +178,5 @@ extension Exercise: Transferable {
                 )
             ]
         )
-    )
+    ).modelContainer(for: Exercise.self, inMemory: true)
 }
