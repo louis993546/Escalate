@@ -3,4 +3,54 @@
    uuid = "D0CCAB37-DF28-4E53-8886-2DA28573CEE8"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2CE0B32F-CC59-4D54-A493-1E4FD037EAB1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Escalate/History/Details/ExerciseDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "updateSet(diff:oldSet:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2CE0B32F-CC59-4D54-A493-1E4FD037EAB1 - 961f7125f3e3f5d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Escalate.ExerciseDetailView.updateSet(diff: Swift.Int, oldSet: Escalate.Sets) -&gt; ()"
+                  moduleName = "Escalate"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/louis/Developer/Escalate/Escalate/History/Details/ExerciseDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "82"
+                  endingLineNumber = "82"
+                  offsetFromSymbolStart = "112">
+               </Location>
+               <Location
+                  uuid = "2CE0B32F-CC59-4D54-A493-1E4FD037EAB1 - e485221d18ba71aa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Escalate.Sets) -&gt; Escalate.Sets in Escalate.ExerciseDetailView.updateSet(diff: Swift.Int, oldSet: Escalate.Sets) -&gt; ()"
+                  moduleName = "Escalate"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/louis/Developer/Escalate/Escalate/History/Details/ExerciseDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "83"
+                  endingLineNumber = "83"
+                  offsetFromSymbolStart = "184">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

@@ -26,7 +26,9 @@ struct ExerciseDetailView: View {
                     ForEach(exercise.sets.sorted(by: { $0.order < $1.order }), id: \.id) { set in
                         SetsRowView(
                             set: set,
-                            onSetChange: { diff in updateSet(diff: diff, oldSet: set) }
+                            onSetChange: { diff in
+                                updateSet(diff: diff, oldSet: set)
+                            }
                         )
                         Separator()
                     }
@@ -78,13 +80,13 @@ struct ExerciseDetailView: View {
     
     private func updateSet(diff: Int, oldSet set: Sets) {
         exercise.sets = exercise.sets.map { (s) -> Sets in
-            if set == s {
+            if set.id == s.id {
                 var newReps = s.reps.map {
                     return Reps(rep: $0.rep, weightNumber: $0.weightNumber)
                 }
                 guard let lastRep = newReps.last else { return s }
                 if (diff < 0) {
-                    let count = abs(diff)
+                    let count = min(abs(diff), newReps.count - 1)
                     count.times {
                         newReps.removeLast()
                     }
