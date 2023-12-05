@@ -10,7 +10,7 @@ import SwiftData
 
 // TODO: add location
 @Model
-final class Exercise: Codable {
+ class Exercise: Codable {
     enum CodingKeys: CodingKey {
         case sets, startTime, comment
     }

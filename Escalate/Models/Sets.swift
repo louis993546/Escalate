@@ -15,7 +15,7 @@ final class Sets: Codable {
     }
     
     var name: String
-    var order: Int
+    var order: Int // TODO: for some reason order was not preserved the layer above (Exercise)
     @Relationship(deleteRule: .cascade) var reps: [Reps]
     var skipped: Bool
     var remark: String?

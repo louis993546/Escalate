@@ -44,6 +44,7 @@ struct ExerciseDetailView: View {
                         preview: .init(exercise.startTime.formatted() + ".json")
                     )
                 }
+                
                 ToolbarItem {
                     Menu {
                         Button(role: .destructive) {
@@ -53,6 +54,12 @@ struct ExerciseDetailView: View {
                             }
                         } label: {
                             Label("Delete", systemImage: "trash")
+                        }
+                        
+                        Button {
+                            // TODO:
+                        } label: {
+                            Label("Reorder (Coming soon)", systemImage: "arrow.up.arrow.down")
                         }
                     } label: {
                         Image(systemName: "ellipsis.circle")

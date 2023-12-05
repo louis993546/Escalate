@@ -23,7 +23,7 @@ struct HistoryListView: View {
                         Text(exercise.startTime.prettyPrint())
                             .contextMenu {
                                 Button {
-                                    selectedExercise = addExercise()
+                                    modelContext.insert(exercise.deepCopy(newDate: Date()))
                                 } label: {
                                     Label("Again", systemImage: "doc.on.doc")
                                 }
@@ -128,6 +128,30 @@ extension Date {
         dateFormatter.dateFormat = "YYYY.MM.dd"
         
         return dateFormatter.string(from: self)
+    }
+}
+
+// TODO: is there a cleaner way to do this copy?
+extension Exercise {
+    func deepCopy(newDate date: Date) -> Exercise {
+        return Exercise(
+            startTime: date,
+            sets: sets.map { s in
+                return Sets(
+                    name: s.name,
+                    order: s.order,
+                    reps: s.reps.map { r in
+                        return Reps(
+                            rep: r.rep,
+                            weightNumber: r.weightNumber
+                        )
+                    },
+                    skipped: s.skipped,
+                    remark: s.remark
+                )
+            },
+            comment: comment
+        )
     }
 }
 

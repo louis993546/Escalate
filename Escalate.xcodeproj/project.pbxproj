@@ -63,14 +63,14 @@
 			path = Escalate.xcodeproj/project.xcworkspace/xcuserdata/louis.xcuserdatad/xcschemes;
 			sourceTree = "<group>";
 		};
-		BF73BB532B1FCD3D00D01939 /* Packages */ = {
+		BF73BB532B1FCD3D00D01939 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				BFACD7B22B1BCB0F00EC0236 /* Exercise.swift */,
 				BFACD7C22B1BCF9000EC0236 /* Sets.swift */,
 				BFACD7C02B1BCF7800EC0236 /* Reps.swift */,
 			);
-			path = Packages;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		BF73BB542B1FCD5A00D01939 /* Details */ = {
@@ -127,7 +127,7 @@
 				BFACD7B02B1BCB0E00EC0236 /* ContentView.swift */,
 				BF73BB552B1FCD6400D01939 /* History */,
 				BF73BB562B1FCD6A00D01939 /* Settings */,
-				BF73BB532B1FCD3D00D01939 /* Packages */,
+				BF73BB532B1FCD3D00D01939 /* Models */,
 				BFACD7B42B1BCB0F00EC0236 /* Assets.xcassets */,
 				BFACD7B92B1BCB0F00EC0236 /* Escalate.entitlements */,
 				BFACD7BA2B1BCB0F00EC0236 /* Info.plist */,
