@@ -8,26 +8,32 @@
 import SwiftUI
 import SwiftData
 
-struct ExerciseDetailView: View {
+struct WorkoutsDetailView: View {
     @Environment(\.modelContext) private var modelContext
     //    @Environment(\.presentationMode) var presentationMode
     
-    let exercise: Exercise
+    let workout: Workouts
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 Grid(alignment: .leading, horizontalSpacing: 12, verticalSpacing: 12) {
-                    AttributesView(exercise: exercise)
+                    AttributesView(workout: workout)
                     Separator()
                     ExerciseHeaderRowView()
                     Separator()
                     
-                    ForEach(exercise.sets.sorted(by: { $0.order < $1.order }), id: \.id) { set in
-                        SetsRowView(
-                            set: set,
+                    ForEach(workout.exercises.sorted(by: { $0.order < $1.order }), id: \.id) { exercise in
+                        ExercisesRowView(
+                            exercise: exercise,
                             onSetChange: { diff in
-                                updateSet(diff: diff, oldSet: set)
+                                updateSet(diff: diff, oldExercise: exercise)
+                            },
+                            onWeightChange: { diff in
+                                updateWeight(diff: diff, oldExercise: exercise)
+                            },
+                            onRepChange: { diff in
+                                updateRep(diff: diff, oldExercise: exercise)
                             }
                         )
                         Separator()
@@ -37,13 +43,13 @@ struct ExerciseDetailView: View {
                 .padding()
             }
             .scrollTargetBehavior(.viewAligned)
-            .navigationTitle(exercise.startTime.prettyPrint())
+            .navigationTitle(workout.startTime.prettyPrint())
             .toolbar(.hidden, for: .tabBar)
             .toolbar {
                 ToolbarItem {
                     ShareLink(
-                        item: exercise,
-                        preview: .init(exercise.startTime.formatted() + ".json")
+                        item: workout,
+                        preview: .init(workout.startTime.formatted() + ".json")
                     )
                 }
                 
@@ -78,36 +84,44 @@ struct ExerciseDetailView: View {
         //.onAppear(perform: loadStateVariables)
     }
     
-    private func updateSet(diff: Int, oldSet set: Sets) {
-        exercise.sets = exercise.sets.map { (s) -> Sets in
-            if set.id == s.id {
-                var newReps = s.reps.map {
-                    return Reps(rep: $0.rep, weightNumber: $0.weightNumber)
+    private func updateSet(diff: Int, oldExercise exercise: Exercises) {
+        workout.exercises = workout.exercises.map { (e) -> Exercises in
+            if exercise.id == e.id {
+                var newSets = e.sets.map {
+                    return Sets(reps: $0.reps, weight: $0.weight)
                 }
-                guard let lastRep = newReps.last else { return s }
+                guard let lastRep = newSets.last else { return e }
                 if (diff < 0) {
-                    let count = min(abs(diff), newReps.count - 1)
+                    let count = min(abs(diff), newSets.count - 1)
                     count.times {
-                        newReps.removeLast()
+                        newSets.removeLast()
                     }
                 } else {
                     diff.times {
-                        newReps.append(
-                            Reps(rep: lastRep.rep, weightNumber: lastRep.weightNumber)
+                        newSets.append(
+                            Sets(reps: lastRep.reps, weight: lastRep.weight)
                         )
                     }
                 }
-                return Sets(
-                    name: s.name,
-                    order: s.order,
-                    reps: newReps,
-                    skipped: s.skipped,
-                    remark: s.remark
+                return Exercises(
+                    name: e.name,
+                    order: e.order,
+                    sets: newSets,
+                    skipped: e.skipped,
+                    remark: e.remark
                 )
             } else {
-                return s
+                return e
             }
         }
+    }
+    
+    private func updateWeight(diff: Float, oldExercise exercise: Exercises) {
+        
+    }
+    
+    private func updateRep(diff: Int, oldExercise exercise: Exercises) {
+        
     }
 }
 
@@ -145,7 +159,7 @@ extension View {
     }
 }
 
-extension Exercise: Transferable {
+extension Workouts: Transferable {
     static func jsonEncoder() -> JSONEncoder {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
@@ -167,18 +181,18 @@ extension Exercise: Transferable {
 }
 
 #Preview {
-    ExerciseDetailView(
-        exercise: Exercise(
+    WorkoutsDetailView(
+        workout: Workouts(
             startTime: Date(),
-            sets: [
-                Sets(
+            exercises: [
+                Exercises(
                     name: "01",
                     order: 1,
-                    reps: [
-                        Reps(rep: 8, weightNumber: 40.0)
+                    sets: [
+                        Sets(reps: 8, weight: 40.0)
                     ]
                 )
             ]
         )
-    ).modelContainer(for: Exercise.self, inMemory: true)
+    ).modelContainer(for: Workouts.self, inMemory: true)
 }

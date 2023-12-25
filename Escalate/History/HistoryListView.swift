@@ -10,53 +10,53 @@ import SwiftData
 
 struct HistoryListView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query(sort: \Exercise.startTime, order: .reverse) private var exercises: [Exercise]
+    @Query(sort: \Workouts.startTime, order: .reverse) private var workouts: [Workouts]
     
-    @State private var selectedExercise: Exercise?
+    @State private var selectedWorkout: Workouts?
     
     var body: some View {
         
         NavigationSplitView {
-            List(selection: $selectedExercise) {
-                ForEach(exercises, id: \.id) { exercise in
-                    NavigationLink(value: exercise) {
-                        Text(exercise.startTime.prettyPrint())
+            List(selection: $selectedWorkout) {
+                ForEach(workouts, id: \.id) { workout in
+                    NavigationLink(value: workout) {
+                        Text(workout.startTime.prettyPrint())
                             .contextMenu {
                                 Button {
-                                    modelContext.insert(exercise.deepCopy(newDate: Date()))
+                                    modelContext.insert(workout.deepCopy(newDate: Date()))
                                 } label: {
                                     Label("Again", systemImage: "doc.on.doc")
                                 }
                                 
                                 ShareLink(
-                                    item: exercise,
-                                    preview: .init(exercise.startTime.formatted() + ".json")
+                                    item: workout,
+                                    preview: .init(workout.startTime.formatted() + ".json")
                                 )
                                 
                                 Button(role: .destructive) {
-                                    removeExercise(exercise: exercise)
+                                    removeWorkout(workout: workout)
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
                             }
                     }
                 }
-                .onDelete(perform: removeExercise)
+                .onDelete(perform: removeWorkout)
             }
             .navigationTitle("History")
             .toolbar {
                 ToolbarItem {
                     Menu {
                         Button {
-                            selectedExercise = addExercise()
+                            selectedWorkout = addWorkout()
                         } label: {
                             Label("Add from scratch", systemImage: "plus.square")
                         }
                         
                         // TODO: not just hide it, if there is no history, just skip the menu
-                        if !exercises.isEmpty {
+                        if !workouts.isEmpty {
                             Button {
-                                selectedExercise = addExercise()
+                                selectedWorkout = addWorkout()
                             } label: {
                                 Label("Clone from history", systemImage: "doc.on.doc")
                             }
@@ -67,57 +67,57 @@ struct HistoryListView: View {
                 }
             }
         } detail: {
-            if selectedExercise != nil {
-                ExerciseDetailView(exercise: selectedExercise!)
+            if selectedWorkout != nil {
+                WorkoutsDetailView(workout: selectedWorkout!)
             } else {
-                Text("Select an exercise")
+                Text("Select a workout")
             }
         }
     }
     
-    private func addExercise() -> Exercise {
+    private func addWorkout() -> Workouts {
         return withAnimation {
-            let newExercise = Exercise(startTime: Date(), comment: "testing")
-            modelContext.insert(newExercise)
+            let newWorkout = Workouts(startTime: Date(), comment: "testing")
+            modelContext.insert(newWorkout)
             
-            newExercise.sets.append(Sets(name: "01", order: 1, reps: [Reps(rep: 12, weightNumber: 40), Reps(rep: 12, weightNumber: 40), Reps(rep: 12, weightNumber: 40)]))
-            newExercise.sets.append(Sets(name: "02", order: 2, reps: [Reps(rep: 8, weightNumber: 35), Reps(rep: 8, weightNumber: 35), Reps(rep: 8, weightNumber: 35)]))
-            newExercise.sets.append(Sets(name: "03", order: 3, reps: [Reps(rep: 10, weightNumber: 50), Reps(rep: 10, weightNumber: 50), Reps(rep: 10, weightNumber: 50)]))
-            newExercise.sets.append(Sets(name: "04(A)", order: 4, reps: [Reps(rep: 14, weightNumber: 15), Reps(rep: 14, weightNumber: 15), Reps(rep: 14, weightNumber: 15)], remark: "😕"))
-            newExercise.sets.append(Sets(name: "05(A)", order: 5, reps: [Reps(rep: 8, weightNumber: 57.5), Reps(rep: 8, weightNumber: 57.5), Reps(rep: 8, weightNumber: 57.5)]))
-            newExercise.sets.append(Sets(name: "06", order: 6, reps: [Reps(rep: 8, weightNumber: 20), Reps(rep: 8, weightNumber: 20), Reps(rep: 8, weightNumber: 20)]))
-            newExercise.sets.append(Sets(name: "07", order: 7, reps: [Reps(rep: 10, weightNumber: 100), Reps(rep: 10, weightNumber: 100), Reps(rep: 10, weightNumber: 100)]))
-            newExercise.sets.append(Sets(name: "07(L)", order: 8, reps: [Reps(rep: 8, weightNumber: 20), Reps(rep: 8, weightNumber: 20), Reps(rep: 8, weightNumber: 20)], remark: "+"))
-            newExercise.sets.append(Sets(name: "08", order: 9, reps: [Reps(rep: 8, weightNumber: 55), Reps(rep: 8, weightNumber: 55), Reps(rep: 8, weightNumber: 55)], remark: "+"))
-            newExercise.sets.append(Sets(name: "09", order: 10, reps: [Reps(rep: 8, weightNumber: 55), Reps(rep: 8, weightNumber: 55), Reps(rep: 8, weightNumber: 55)]))
-            newExercise.sets.append(Sets(name: "13 👍", order: 11, reps: [Reps(rep: 12, weightNumber: 22.5), Reps(rep: 12, weightNumber: 22.5), Reps(rep: 12, weightNumber: 22.5)]))
-            newExercise.sets.append(Sets(name: "14", order: 12, reps: [Reps(rep: 10, weightNumber: 30), Reps(rep: 10, weightNumber: 30), Reps(rep: 10, weightNumber: 30)]))
-            newExercise.sets.append(Sets(name: "17", order: 13, reps: [Reps(rep: 15, weightNumber: 30), Reps(rep: 15, weightNumber: 30), Reps(rep: 15, weightNumber: 30)]))
-            newExercise.sets.append(Sets(name: "21", order: 14, reps: [Reps(rep: 10, weightNumber: 20), Reps(rep: 10, weightNumber: 20), Reps(rep: 10, weightNumber: 20)], remark: "+"))
-            newExercise.sets.append(Sets(name: "22 👍", order: 15, reps: [Reps(rep: 9, weightNumber: 12.5), Reps(rep: 9, weightNumber: 12.5), Reps(rep: 9, weightNumber: 12.5)]))
-            newExercise.sets.append(Sets(name: "23 single", order: 16, reps: [Reps(rep: 8, weightNumber: 15), Reps(rep: 8, weightNumber: 15), Reps(rep: 8, weightNumber: 15)]))
+            newWorkout.exercises.append(Exercises(name: "01", order: 1, sets: [Sets(reps: 12, weight: 40), Sets(reps: 12, weight: 40), Sets(reps: 12, weight: 40)]))
+            newWorkout.exercises.append(Exercises(name: "02", order: 2, sets: [Sets(reps: 8, weight: 35), Sets(reps: 8, weight: 35), Sets(reps: 8, weight: 35)]))
+            newWorkout.exercises.append(Exercises(name: "03", order: 3, sets: [Sets(reps: 10, weight: 50), Sets(reps: 10, weight: 50), Sets(reps: 10, weight: 50)]))
+            newWorkout.exercises.append(Exercises(name: "04(A)", order: 4, sets: [Sets(reps: 14, weight: 15), Sets(reps: 14, weight: 15), Sets(reps: 14, weight: 15)], remark: "😕"))
+            newWorkout.exercises.append(Exercises(name: "05(A)", order: 5, sets: [Sets(reps: 8, weight: 57.5), Sets(reps: 8, weight: 57.5), Sets(reps: 8, weight: 57.5)]))
+            newWorkout.exercises.append(Exercises(name: "06", order: 6, sets: [Sets(reps: 8, weight: 20), Sets(reps: 8, weight: 20), Sets(reps: 8, weight: 20)]))
+            newWorkout.exercises.append(Exercises(name: "07", order: 7, sets: [Sets(reps: 10, weight: 100), Sets(reps: 10, weight: 100), Sets(reps: 10, weight: 100)]))
+            newWorkout.exercises.append(Exercises(name: "07(L)", order: 8, sets: [Sets(reps: 8, weight: 20), Sets(reps: 8, weight: 20), Sets(reps: 8, weight: 20)], remark: "+"))
+            newWorkout.exercises.append(Exercises(name: "08", order: 9, sets: [Sets(reps: 8, weight: 55), Sets(reps: 8, weight: 55), Sets(reps: 8, weight: 55)], remark: "+"))
+            newWorkout.exercises.append(Exercises(name: "09", order: 10, sets: [Sets(reps: 8, weight: 55), Sets(reps: 8, weight: 55), Sets(reps: 8, weight: 55)]))
+            newWorkout.exercises.append(Exercises(name: "13 👍", order: 11, sets: [Sets(reps: 12, weight: 22.5), Sets(reps: 12, weight: 22.5), Sets(reps: 12, weight: 22.5)]))
+            newWorkout.exercises.append(Exercises(name: "14", order: 12, sets: [Sets(reps: 10, weight: 30), Sets(reps: 10, weight: 30), Sets(reps: 10, weight: 30)]))
+            newWorkout.exercises.append(Exercises(name: "17", order: 13, sets: [Sets(reps: 15, weight: 30), Sets(reps: 15, weight: 30), Sets(reps: 15, weight: 30)]))
+            newWorkout.exercises.append(Exercises(name: "21", order: 14, sets: [Sets(reps: 10, weight: 20), Sets(reps: 10, weight: 20), Sets(reps: 10, weight: 20)], remark: "+"))
+            newWorkout.exercises.append(Exercises(name: "22 👍", order: 15, sets: [Sets(reps: 9, weight: 12.5), Sets(reps: 9, weight: 12.5), Sets(reps: 9, weight: 12.5)]))
+            newWorkout.exercises.append(Exercises(name: "23 single", order: 16, sets: [Sets(reps: 8, weight: 15), Sets(reps: 8, weight: 15), Sets(reps: 8, weight: 15)]))
             
-            newExercise.sets.append(Sets(name: "24", order: 17, reps: [Reps(rep: 12, weightNumber: 22.5), Reps(rep: 12, weightNumber: 22.5), Reps(rep: 12, weightNumber: 22.5)]))
-            newExercise.sets.append(Sets(name: "120 L", order: 18, reps: [Reps(rep: 8, weightNumber: 17.5), Reps(rep: 8, weightNumber: 17.5), Reps(rep: 8, weightNumber: 17.5)]))
-            newExercise.sets.append(Sets(name: "120 R", order: 19, reps: [Reps(rep: 8, weightNumber: 17.5), Reps(rep: 8, weightNumber: 17.5), Reps(rep: 8, weightNumber: 17.5)]))
-            newExercise.sets.append(Sets(name: "Pectoral", order: 20, reps: [Reps(rep: 12, weightNumber: 15), Reps(rep: 12, weightNumber: 15), Reps(rep: 12, weightNumber: 15)], remark: "😕"))
+            newWorkout.exercises.append(Exercises(name: "24", order: 17, sets: [Sets(reps: 12, weight: 22.5), Sets(reps: 12, weight: 22.5), Sets(reps: 12, weight: 22.5)]))
+            newWorkout.exercises.append(Exercises(name: "120 L", order: 18, sets: [Sets(reps: 8, weight: 17.5), Sets(reps: 8, weight: 17.5), Sets(reps: 8, weight: 17.5)]))
+            newWorkout.exercises.append(Exercises(name: "120 R", order: 19, sets: [Sets(reps: 8, weight: 17.5), Sets(reps: 8, weight: 17.5), Sets(reps: 8, weight: 17.5)]))
+            newWorkout.exercises.append(Exercises(name: "Pectoral", order: 20, sets: [Sets(reps: 12, weight: 15), Sets(reps: 12, weight: 15), Sets(reps: 12, weight: 15)], remark: "😕"))
             
             // Dummy
-            newExercise.sets.append(Sets(name: "test", order: 21, reps: [Reps(rep: 12, weightNumber: 22.5), Reps(rep: 12, weightNumber: 22.5), Reps(rep: 12, weightNumber: 22.5)], skipped: true))
+            newWorkout.exercises.append(Exercises(name: "test", order: 21, sets: [Sets(reps: 12, weight: 22.5), Sets(reps: 12, weight: 22.5), Sets(reps: 12, weight: 22.5)], skipped: true))
             
-            return newExercise
+            return newWorkout
         }
     }
     
-    private func removeExercise(offsets: IndexSet) {
+    private func removeWorkout(offsets: IndexSet) {
         for index in offsets {
-            removeExercise(exercise: exercises[index])
+            removeWorkout(workout: workouts[index])
         }
     }
     
-    private func removeExercise(exercise: Exercise) {
+    private func removeWorkout(workout: Workouts) {
         withAnimation {
-            modelContext.delete(exercise)
+            modelContext.delete(workout)
         }
     }
 }
@@ -132,22 +132,22 @@ extension Date {
 }
 
 // TODO: is there a cleaner way to do this copy?
-extension Exercise {
-    func deepCopy(newDate date: Date) -> Exercise {
-        return Exercise(
+extension Workouts {
+    func deepCopy(newDate date: Date) -> Workouts {
+        return Workouts(
             startTime: date,
-            sets: sets.map { s in
-                return Sets(
-                    name: s.name,
-                    order: s.order,
-                    reps: s.reps.map { r in
-                        return Reps(
-                            rep: r.rep,
-                            weightNumber: r.weightNumber
+            exercises: exercises.map { e in
+                return Exercises(
+                    name: e.name,
+                    order: e.order,
+                    sets: e.sets.map { s in
+                        return Sets(
+                            reps: s.reps,
+                            weight: s.weight
                         )
                     },
-                    skipped: s.skipped,
-                    remark: s.remark
+                    skipped: e.skipped,
+                    remark: e.remark
                 )
             },
             comment: comment
@@ -158,5 +158,5 @@ extension Exercise {
 #Preview {
     // TODO: insert some fake data here https://www.hackingwithswift.com/quick-start/swiftdata/how-to-use-swiftdata-in-swiftui-previews
     HistoryListView()
-        .modelContainer(for: Exercise.self, inMemory: true)
+        .modelContainer(for: Workouts.self, inMemory: true)
 }

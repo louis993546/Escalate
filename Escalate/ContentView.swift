@@ -19,7 +19,7 @@ struct ContentView: View {
                 // TODO: https://www.appcoda.com/swiftui-line-charts/
                 Text("Coming soon")
                     .navigationTitle("Statistics")
-            }
+            }	
             .tabItem {
                 Label("Statistics", systemImage: "chart.line.uptrend.xyaxis")
             }

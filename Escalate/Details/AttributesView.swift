@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct AttributesView: View {
-    let exercise: Exercise
+    let workout: Workouts
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(exercise.startTime.time())
+            Text(workout.startTime.time())
             
-            if let string = exercise.comment, !string.isEmpty {
+            if let string = workout.comment, !string.isEmpty {
                 Text(string)
             } else {
                 Text("Add comment").foregroundStyle(.gray)
@@ -34,12 +34,12 @@ extension Date {
 
 #Preview("No comment") {
     AttributesView(
-        exercise: Exercise(startTime: Date())
+        workout: Workouts(startTime: Date())
     )
 }
 
 #Preview("With comment") {
     AttributesView(
-        exercise: Exercise(startTime: Date(), comment: "Deserunt eu cupidatat ut deserunt et commodo consectetur occaecat sit qui deserunt. Nostrud eu exercitation incididunt nisi incididunt exercitation aute occaecat commodo labore sunt pariatur anim. Esse esse deserunt lorem consectetur et deserunt laboris ad eu sint.")
+        workout: Workouts(startTime: Date(), comment: "Deserunt eu cupidatat ut deserunt et commodo consectetur occaecat sit qui deserunt. Nostrud eu exercitation incididunt nisi incididunt exercitation aute occaecat commodo labore sunt pariatur anim. Esse esse deserunt lorem consectetur et deserunt laboris ad eu sint.")
     )
 }

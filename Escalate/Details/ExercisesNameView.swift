@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SetNameView: View {
+struct ExercisesNameView: View {
     let name: String
     let skipped: Bool
     
@@ -37,7 +37,7 @@ struct SetNameView: View {
 }
 
 #Preview("not skipped") {
-    SetNameView(
+    ExercisesNameView(
         name: "01", 
         skipped: false,
         onSkipPressed: { _ in }
@@ -45,7 +45,7 @@ struct SetNameView: View {
 }
 
 #Preview("skipped") {
-    SetNameView(
+    ExercisesNameView(
         name: "01",
         skipped: true,
         onSkipPressed: { _ in }

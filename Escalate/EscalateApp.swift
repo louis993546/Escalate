@@ -12,9 +12,9 @@ import SwiftData
 struct EscalateApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Exercise.self,
+            Workouts.self,
+            Exercises.self,
             Sets.self,
-            Reps.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

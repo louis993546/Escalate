@@ -10,7 +10,7 @@ import SwiftData
 
 struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query(sort: \Exercise.startTime, order: .reverse) private var exercises: [Exercise]
+    @Query(sort: \Workouts.startTime, order: .reverse) private var workouts: [Workouts]
     
     @AppStorage("dragSensitivity") private var dragSensitivity = 24
     
@@ -32,7 +32,7 @@ struct SettingsView: View {
                 
                 Section {
                     ShareLink(
-                        item: ExerciseWrapper(exercies: exercises),
+                        item: ExerciseWrapper(workouts: workouts),
                         preview: .init("WTF")
                     ) {
                         LabeledContent("Export", value: "")
@@ -71,7 +71,7 @@ struct SettingsView: View {
 }
 
 struct ExerciseWrapper: Codable {
-    let exercies: [Exercise]
+    let workouts: [Workouts]
 }
 
 extension ExerciseWrapper: Transferable {

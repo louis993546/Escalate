@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SetsRowView: View {
+struct ExercisesRowView: View {
     @AppStorage("dragSensitivity") private var dragSensitivity = 24
     
     // TODO: (double) tap => Edit mode
@@ -16,26 +16,28 @@ struct SetsRowView: View {
     @State private var isRepsPopoverOpen = false
     @State private var dragDiff: Float = 0
     
-    let set: Sets
+    let exercise: Exercises
     let onSetChange: ((Int) -> Void)
+    let onWeightChange: ((Float) -> Void)
+    let onRepChange: ((Int) -> Void)
     
     var body: some View {
         GridRow {
-            SetNameView(
-                name: set.name,
-                skipped: set.skipped,
+            ExercisesNameView(
+                name: exercise.name,
+                skipped: exercise.skipped,
                 onSkipPressed: { newValue in
-                    set.skipped = newValue
+                    exercise.skipped = newValue
                 }
             )
-            Text(String(set.reps.count))
+            Text(String(exercise.sets.count))
                 .longPressAndDrag(
                     dragSensitivity: dragSensitivity,
                     isDragging: $isSetsPopoverOpen,
                     offset: $dragDiff
                 )
                 .popover(isPresented: $isSetsPopoverOpen) {
-                    Text(String(max(set.reps.count + Int(dragDiff.rounded()), 1)))
+                    Text(String(max(exercise.sets.count + Int(dragDiff.rounded()), 1)))
                         .presentationCompactAdaptation((.popover))
                 }
                 .onChange(of: isSetsPopoverOpen, initial: false) { oldValue, newValue  in
@@ -45,25 +47,24 @@ struct SetsRowView: View {
                         UINotificationFeedbackGenerator().notificationOccurred(.success)
                     }
                 }
-            Text(String(set.getCommonWeight()?.clean ?? "WTF"))
+            Text(String(exercise.getCommonWeight()?.clean ?? "WTF"))
                 .longPressAndDrag(
                     dragSensitivity: dragSensitivity,
                     isDragging: $isWeightPopoverOpen,
                     offset: $dragDiff
                 )
                 .popover(isPresented: $isWeightPopoverOpen) {
-                    Text("\(max(0, dragDiff + (set.getCommonWeight() ?? 0)).round(nearest: 0.5).decimalPlaces(decimalPlaces: 1))")
+                    Text("\(max(0, dragDiff + (exercise.getCommonWeight() ?? 0)).round(nearest: 0.5).decimalPlaces(decimalPlaces: 1))")
                         .presentationCompactAdaptation((.popover))
                 }
                 .onChange(of: isWeightPopoverOpen, initial: false) { oldValue, newValue  in
                     if oldValue == true && newValue == false { // i.e. just got closed
-                        // TODO: save data
-                        print("Final weigh diff: \(dragDiff)")
+                        onWeightChange(dragDiff)
                     } else if oldValue == false && newValue == true { // i.e. just got opened
                         UINotificationFeedbackGenerator().notificationOccurred(.success)
                     }
                 }
-            Text(String(set.getCommonReps() ?? 0))
+            Text(String(exercise.getCommonReps() ?? 0))
                 .longPressAndDrag(
                     dragSensitivity: dragSensitivity,
                     isDragging: $isRepsPopoverOpen,
@@ -71,20 +72,19 @@ struct SetsRowView: View {
                 )
                 .popover(isPresented: $isRepsPopoverOpen) {
                     //                    Text(String(max(set.getCommonReps() ?? 0 + Int(dragDiff.rounded()), 0)))
-                    Text("\(max(0, (Int(dragDiff.rounded()) + (set.getCommonReps() ?? 0))))")
+                    Text("\(max(0, (Int(dragDiff.rounded()) + (exercise.getCommonReps() ?? 0))))")
                     .presentationCompactAdaptation((.popover))
                 }
-                .onChange(of: isRepsPopoverOpen, initial: ((set.getCommonReps() ?? 0) != 0)) { oldValue, newValue in
+                .onChange(of: isRepsPopoverOpen, initial: ((exercise.getCommonReps() ?? 0) != 0)) { oldValue, newValue in
                     if oldValue == true && newValue == false { // i.e. just got closed
-                        // TODO: save data
-                        print("Final reps diff: \(dragDiff)")
+                        onRepChange(Int(dragDiff.rounded()))
                     } else if oldValue == false && newValue == true { // i.e. just got opened
                         UINotificationFeedbackGenerator().notificationOccurred(.success)
                     }
                 }
             // TODO: put remark back
             //            + Text(" \(set.remark ?? "")").font(.footnote)
-        }.if({return set.skipped}()) { view in
+        }.if({return exercise.skipped}()) { view in
             view.foregroundStyle(.gray)
         }
     }
@@ -155,9 +155,11 @@ extension Float {
 
 #Preview {
     Grid {
-        SetsRowView(
-            set: Sets(name: "01", order: 1),
-            onSetChange: { _ in }
+        ExercisesRowView(
+            exercise: Exercises(name: "01", order: 1),
+            onSetChange: { _ in },
+            onWeightChange: { _ in },
+            onRepChange: { _ in }
         )
     }
 }
