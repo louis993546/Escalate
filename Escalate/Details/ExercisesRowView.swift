@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ExercisesRowView: View {
+    // TODO separate sensitivity for each of the slider
     @AppStorage("dragSensitivity") private var dragSensitivity = 24
     
     // TODO: (double) tap => Edit mode

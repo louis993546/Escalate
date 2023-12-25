@@ -116,12 +116,42 @@ struct WorkoutsDetailView: View {
         }
     }
     
+    // TODO: ExerciseRowView separately does the rounding. Maybe put it in an extension?
     private func updateWeight(diff: Float, oldExercise exercise: Exercises) {
-        
+        let roundedDiff = diff.round(nearest: 0.5)
+        workout.exercises = workout.exercises.map { (e) -> Exercises in
+            if exercise.id == e.id {
+                let newSets = e.sets.map {
+                    return Sets(reps: $0.reps, weight: $0.weight + roundedDiff)
+                }
+                return Exercises(
+                    name: e.name,
+                    order: e.order,
+                    sets: newSets,
+                    skipped: e.skipped,
+                    remark: e.remark
+                )
+            } else {
+                return e
+            }
+        }
     }
     
     private func updateRep(diff: Int, oldExercise exercise: Exercises) {
-        
+        workout.exercises = workout.exercises.map { (e) -> Exercises in
+            if exercise.id == e.id {
+                let newSets = e.sets.map {
+                    return Sets(reps: $0.reps + diff, weight: $0.weight)
+                }
+                return Exercises(
+                    name: e.name,
+                    order: e.order,
+                    sets: newSets,
+                    skipped: e.skipped,
+                    remark: e.remark
+                )
+            } else { return e }
+        }
     }
 }
 

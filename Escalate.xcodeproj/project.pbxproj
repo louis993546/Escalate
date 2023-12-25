@@ -13,6 +13,7 @@
 		BF73BB522B1FCC3400D01939 /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73BB512B1FCC3400D01939 /* Separator.swift */; };
 		BF73BB582B1FDB6500D01939 /* ExercisesNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73BB572B1FDB6500D01939 /* ExercisesNameView.swift */; };
 		BF7A0ED02B3A1224008D7E42 /* Workouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7A0ECF2B3A1224008D7E42 /* Workouts.swift */; };
+		BF7A0ED22B3A292F008D7E42 /* EditableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7A0ED12B3A292F008D7E42 /* EditableText.swift */; };
 		BFACD7AF2B1BCB0E00EC0236 /* EscalateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFACD7AE2B1BCB0E00EC0236 /* EscalateApp.swift */; };
 		BFACD7B12B1BCB0E00EC0236 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFACD7B02B1BCB0E00EC0236 /* ContentView.swift */; };
 		BFACD7B32B1BCB0F00EC0236 /* Exercises.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFACD7B22B1BCB0F00EC0236 /* Exercises.swift */; };
@@ -31,6 +32,7 @@
 		BF73BB512B1FCC3400D01939 /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
 		BF73BB572B1FDB6500D01939 /* ExercisesNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesNameView.swift; sourceTree = "<group>"; };
 		BF7A0ECF2B3A1224008D7E42 /* Workouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workouts.swift; sourceTree = "<group>"; };
+		BF7A0ED12B3A292F008D7E42 /* EditableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableText.swift; sourceTree = "<group>"; };
 		BFACD7AB2B1BCB0E00EC0236 /* Escalate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Escalate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFACD7AE2B1BCB0E00EC0236 /* EscalateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EscalateApp.swift; sourceTree = "<group>"; };
 		BFACD7B02B1BCB0E00EC0236 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				BF73BB572B1FDB6500D01939 /* ExercisesNameView.swift */,
 				BF73BB4F2B1FCBFF00D01939 /* ExerciseHeaderRowView.swift */,
 				BF73BB512B1FCC3400D01939 /* Separator.swift */,
+				BF7A0ED12B3A292F008D7E42 /* EditableText.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				BF73BB4E2B1FCB8100D01939 /* ExercisesRowView.swift in Sources */,
 				BF73BB4C2B1FB6F200D01939 /* AttributesView.swift in Sources */,
 				BFACD7AF2B1BCB0E00EC0236 /* EscalateApp.swift in Sources */,
+				BF7A0ED22B3A292F008D7E42 /* EditableText.swift in Sources */,
 				BF73BB582B1FDB6500D01939 /* ExercisesNameView.swift in Sources */,
 				BF73BB522B1FCC3400D01939 /* Separator.swift in Sources */,
 				BF7A0ED02B3A1224008D7E42 /* Workouts.swift in Sources */,

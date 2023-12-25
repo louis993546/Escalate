@@ -14,11 +14,15 @@ struct AttributesView: View {
         VStack(alignment: .leading) {
             Text(workout.startTime.time())
             
-            if let string = workout.comment, !string.isEmpty {
-                Text(string)
-            } else {
-                Text("Add comment").foregroundStyle(.gray)
-            }
+            let commentText = (workout.comment ?? "").isEmpty ? "Add comment" : workout.comment!
+            EditableText(
+                text: .init(
+                    get: { return commentText },
+                    set: { newText in
+                        workout.comment = newText
+                    }
+                )
+            )
         }
     }
 }
