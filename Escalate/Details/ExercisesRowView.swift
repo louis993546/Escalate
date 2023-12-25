@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ExercisesRowView: View {
     // TODO separate sensitivity for each of the slider
-    @AppStorage("dragSensitivity") private var dragSensitivity = 24
+    @AppStorage("dragSensitivitySets") private var dragSensitivitySets = 24
+    @AppStorage("dragSensitivityWeight") private var dragSensitivityWeight = 24
+    @AppStorage("dragSensitivityReps") private var dragSensitivityReps = 18
     
     // TODO: (double) tap => Edit mode
     @State private var isSetsPopoverOpen = false
@@ -33,7 +35,7 @@ struct ExercisesRowView: View {
             )
             Text(String(exercise.sets.count))
                 .longPressAndDrag(
-                    dragSensitivity: dragSensitivity,
+                    dragSensitivity: dragSensitivitySets,
                     isDragging: $isSetsPopoverOpen,
                     offset: $dragDiff
                 )
@@ -50,12 +52,12 @@ struct ExercisesRowView: View {
                 }
             Text(String(exercise.getCommonWeight()?.clean ?? "WTF"))
                 .longPressAndDrag(
-                    dragSensitivity: dragSensitivity,
+                    dragSensitivity: dragSensitivityWeight,
                     isDragging: $isWeightPopoverOpen,
                     offset: $dragDiff
                 )
                 .popover(isPresented: $isWeightPopoverOpen) {
-                    Text("\(max(0, dragDiff + (exercise.getCommonWeight() ?? 0)).round(nearest: 0.5).decimalPlaces(decimalPlaces: 1))")
+                    Text("\(max(0.5, dragDiff + (exercise.getCommonWeight() ?? 0)).round(nearest: 0.5).decimalPlaces(decimalPlaces: 1))")
                         .presentationCompactAdaptation((.popover))
                 }
                 .onChange(of: isWeightPopoverOpen, initial: false) { oldValue, newValue  in
@@ -67,13 +69,13 @@ struct ExercisesRowView: View {
                 }
             Text(String(exercise.getCommonReps() ?? 0))
                 .longPressAndDrag(
-                    dragSensitivity: dragSensitivity,
+                    dragSensitivity: dragSensitivityReps,
                     isDragging: $isRepsPopoverOpen,
                     offset: $dragDiff
                 )
                 .popover(isPresented: $isRepsPopoverOpen) {
                     //                    Text(String(max(set.getCommonReps() ?? 0 + Int(dragDiff.rounded()), 0)))
-                    Text("\(max(0, (Int(dragDiff.rounded()) + (exercise.getCommonReps() ?? 0))))")
+                    Text("\(max(1, (Int(dragDiff.rounded()) + (exercise.getCommonReps() ?? 0))))")
                     .presentationCompactAdaptation((.popover))
                 }
                 .onChange(of: isRepsPopoverOpen, initial: ((exercise.getCommonReps() ?? 0) != 0)) { oldValue, newValue in

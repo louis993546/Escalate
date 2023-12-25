@@ -12,7 +12,9 @@ struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Workouts.startTime, order: .reverse) private var workouts: [Workouts]
     
-    @AppStorage("dragSensitivity") private var dragSensitivity = 24
+    @AppStorage("dragSensitivitySets") private var dragSensitivitySets = 24
+    @AppStorage("dragSensitivityWeight") private var dragSensitivityWeight = 24
+    @AppStorage("dragSensitivityReps") private var dragSensitivityReps = 18
     
     @State private var showingDeleteAlert = false
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
@@ -22,11 +24,27 @@ struct SettingsView: View {
             Form {
                 Section {
                     LabeledContent {
-                        Stepper(value: $dragSensitivity, in: 10...100) {
-                            Text(dragSensitivity.formatted(.number))
+                        Stepper(value: $dragSensitivitySets, in: 10...100) {
+                            Text(dragSensitivitySets.formatted(.number))
                         }
                     } label: {
-                        Text("Drag Sensitivity: ")
+                        Text("Sets Drag Sensitivity: ")
+                    }
+                    
+                    LabeledContent {
+                        Stepper(value: $dragSensitivityWeight, in: 10...100) {
+                            Text(dragSensitivityWeight.formatted(.number))
+                        }
+                    } label: {
+                        Text("Weight rag Sensitivity: ")
+                    }
+                    
+                    LabeledContent {
+                        Stepper(value: $dragSensitivityReps, in: 10...100) {
+                            Text(dragSensitivityReps.formatted(.number))
+                        }
+                    } label: {
+                        Text("Reps Drag Sensitivity: ")
                     }
                 }
                 

@@ -85,6 +85,8 @@ struct WorkoutsDetailView: View {
     }
     
     private func updateSet(diff: Int, oldExercise exercise: Exercises) {
+        guard abs(diff) > 0 else { return }
+        
         workout.exercises = workout.exercises.map { (e) -> Exercises in
             if exercise.id == e.id {
                 var newSets = e.sets.map {
@@ -119,10 +121,13 @@ struct WorkoutsDetailView: View {
     // TODO: ExerciseRowView separately does the rounding. Maybe put it in an extension?
     private func updateWeight(diff: Float, oldExercise exercise: Exercises) {
         let roundedDiff = diff.round(nearest: 0.5)
+        guard abs(roundedDiff) > 0.1 else { return }
+        
         workout.exercises = workout.exercises.map { (e) -> Exercises in
             if exercise.id == e.id {
                 let newSets = e.sets.map {
-                    return Sets(reps: $0.reps, weight: $0.weight + roundedDiff)
+                    let newWeight = $0.weight + roundedDiff
+                    return Sets(reps: $0.reps, weight: max(0.5, newWeight))
                 }
                 return Exercises(
                     name: e.name,
@@ -138,10 +143,13 @@ struct WorkoutsDetailView: View {
     }
     
     private func updateRep(diff: Int, oldExercise exercise: Exercises) {
+        guard abs(diff) > 0 else { return }
+        
         workout.exercises = workout.exercises.map { (e) -> Exercises in
             if exercise.id == e.id {
                 let newSets = e.sets.map {
-                    return Sets(reps: $0.reps + diff, weight: $0.weight)
+                    let newReps = $0.reps + diff
+                    return Sets(reps: max(1, newReps), weight: $0.weight)
                 }
                 return Exercises(
                     name: e.name,
