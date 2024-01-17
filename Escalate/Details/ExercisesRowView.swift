@@ -23,12 +23,16 @@ struct ExercisesRowView: View {
     let onSetChange: ((Int) -> Void)
     let onWeightChange: ((Float) -> Void)
     let onRepChange: ((Int) -> Void)
+    let onDeletePressed: () -> Void
     
     var body: some View {
         GridRow {
             ExercisesNameView(
                 name: exercise.name,
                 skipped: exercise.skipped,
+                onDeletePressed: {
+                    onDeletePressed()
+                },
                 onSkipPressed: { newValue in
                     exercise.skipped = newValue
                 }
@@ -162,7 +166,8 @@ extension Float {
             exercise: Exercises(name: "01", order: 1),
             onSetChange: { _ in },
             onWeightChange: { _ in },
-            onRepChange: { _ in }
+            onRepChange: { _ in },
+            onDeletePressed: { }
         )
     }
 }

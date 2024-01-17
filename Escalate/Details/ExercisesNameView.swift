@@ -11,6 +11,7 @@ struct ExercisesNameView: View {
     let name: String
     let skipped: Bool
     
+    let onDeletePressed: () -> Void
     let onSkipPressed: ((Bool) -> Void)
     
     var body: some View {
@@ -19,9 +20,9 @@ struct ExercisesNameView: View {
             .contentShape(Rectangle())
             .contextMenu {
                 Button(role: .destructive) {
-                    // TODO
+                    onDeletePressed()
                 } label: {
-                    Label("Delete (coming soon)", systemImage: "trash")
+                    Label("Delete", systemImage: "trash")
                 }
                 
                 Button {
@@ -40,6 +41,7 @@ struct ExercisesNameView: View {
     ExercisesNameView(
         name: "01", 
         skipped: false,
+        onDeletePressed: { },
         onSkipPressed: { _ in }
     )
 }
@@ -48,6 +50,7 @@ struct ExercisesNameView: View {
     ExercisesNameView(
         name: "01",
         skipped: true,
+        onDeletePressed: { },
         onSkipPressed: { _ in }
     )
 }

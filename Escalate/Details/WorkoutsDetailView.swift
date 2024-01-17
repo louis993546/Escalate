@@ -34,6 +34,9 @@ struct WorkoutsDetailView: View {
                             },
                             onRepChange: { diff in
                                 updateRep(diff: diff, oldExercise: exercise)
+                            },
+                            onDeletePressed: {
+                                removeExercise(exercise: exercise)
                             }
                         )
                         Separator()
@@ -159,6 +162,12 @@ struct WorkoutsDetailView: View {
                     remark: e.remark
                 )
             } else { return e }
+        }
+    }
+    
+    private func removeExercise(exercise: Exercises) {
+        workout.exercises = workout.exercises.filter { e in
+            e.id != exercise.id
         }
     }
 }
