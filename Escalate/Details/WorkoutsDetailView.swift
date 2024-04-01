@@ -166,8 +166,11 @@ struct WorkoutsDetailView: View {
     }
     
     private func removeExercise(exercise: Exercises) {
-        workout.exercises = workout.exercises.filter { e in
-            e.id != exercise.id
+        withAnimation {
+            workout.exercises = workout.exercises.filter { e in
+                e.id != exercise.id
+            }
+            modelContext.delete(exercise)
         }
     }
 }
